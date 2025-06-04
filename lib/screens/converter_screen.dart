@@ -69,24 +69,31 @@ class _ConverterScreenState extends State<ConverterScreen> {
 
   /// Builds the landscape orientation layout
   Widget _buildLandscapeLayout() {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 2,
-            child: ConversionSection(onConversionComplete: _addToHistory),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            flex: 1,
-            child: HistorySection(
-              history: _history,
-              onClearHistory: _clearHistory,
+      // Use scrollDirection to handle vertical scrolling
+      scrollDirection: Axis.vertical,
+      child: IntrinsicHeight(
+        // This ensures children in Row have same height constraints
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flexible(
+              // Using Flexible instead of Expanded to better handle overflow
+              flex: 2,
+              child: ConversionSection(onConversionComplete: _addToHistory),
             ),
-          ),
-        ],
+            const SizedBox(width: 16),
+            Flexible(
+              // Using Flexible instead of Expanded
+              flex: 1,
+              child: HistorySection(
+                history: _history,
+                onClearHistory: _clearHistory,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
