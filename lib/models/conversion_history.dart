@@ -1,3 +1,5 @@
+import '../utils/format_utils.dart';
+
 // Data class to store conversion history entries
 class ConversionHistory {
   final String type;
@@ -12,11 +14,10 @@ class ConversionHistory {
 
   /// Creates a formatted string representation of the conversion
   String get formattedConversion {
-    return '$type: ${inputValue.toStringAsFixed(1)} ⇒ ${outputValue.toStringAsFixed(1)}';
-  }
-
-  /// Creates a detailed string representation for result display
-  String get detailedConversion {
-    return '$type: ${inputValue.toStringAsFixed(1)} ⇒ ${outputValue.toStringAsFixed(1)}';
+    return FormatUtils.formatConversion(
+      type: type,
+      input: inputValue,
+      output: outputValue,
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/conversion_history.dart';
+import 'app_card.dart';
 
 /// Widget that displays the conversion history
 class HistorySection extends StatelessWidget {
@@ -14,9 +15,7 @@ class HistorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    return AppCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [_buildHeader(context), _buildHistoryList()],

@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import '../models/conversion_history.dart';
 import '../services/temperature_converter.dart';
 import '../utils/input_validator.dart';
+import '../utils/format_utils.dart';
+import 'app_card.dart';
 
 /// Widget that handles the main conversion functionality
 class ConversionSection extends StatefulWidget {
@@ -81,25 +83,21 @@ class _ConversionSectionState extends State<ConversionSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildConversionTypeSelection(),
+    return AppCard(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _buildConversionTypeSelection(),
+          const SizedBox(height: 20),
+          _buildTemperatureInputSection(),
+          const SizedBox(height: 20),
+          _buildConvertButton(),
+          if (_convertedValue != null) ...[
             const SizedBox(height: 20),
-            _buildTemperatureInputSection(),
-            const SizedBox(height: 20),
-            _buildConvertButton(),
-            if (_convertedValue != null) ...[
-              const SizedBox(height: 20),
-              _buildResultDisplay(),
-            ],
+            _buildResultDisplay(),
           ],
-        ),
+        ],
       ),
     );
   }
@@ -213,9 +211,13 @@ class _ConversionSectionState extends State<ConversionSection> {
 
     final inputValue =
         InputValidator.parseTemperature(_temperatureController.text) ?? 0;
-    final conversionText = _isFahrenheitToCelsius
-        ? 'F to C: ${inputValue.toStringAsFixed(1)} ⇒ ${_convertedValue!.toStringAsFixed(1)}'
-        : 'C to F: ${inputValue.toStringAsFixed(1)} ⇒ ${_convertedValue!.toStringAsFixed(1)}';
+    final type = _isFahrenheitToCelsius ? 'F to C' : 'C to F';
+
+    final conversionText = FormatUtils.formatConversion(
+      type: type,
+      input: inputValue,
+      output: _convertedValue!,
+    );
 
     return Container(
       padding: const EdgeInsets.all(12),

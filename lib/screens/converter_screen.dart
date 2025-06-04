@@ -34,7 +34,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Converter',
+          'Temperature Converter',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
